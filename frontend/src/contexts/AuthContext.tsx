@@ -1,11 +1,14 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import api from '../lib/api';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface User {
   id: number;
   name: string;
   email: string;
+  preferred_language?: string;
   // Add other fields as needed
 }
 
@@ -25,6 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -33,6 +37,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           // Attempt to fetch current user profile
           const response = await api.get('/auth/me');
           setUser(response.data);
+          if (response.data.preferred_language) {
+            i18n.changeLanguage(response.data.preferred_language);
+          }
         } catch (error) {
           console.error("Failed to fetch user, token might be invalid", error);
           logout();
@@ -42,12 +49,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     fetchUser();
-  }, [token]);
+  }, [token, i18n]);
 
   const login = (newToken: string, userData: User) => {
     localStorage.setItem('token', newToken);
     setToken(newToken);
     setUser(userData);
+    if (userData.preferred_language) {
+      i18n.changeLanguage(userData.preferred_language);
+    }
   };
 
   const logout = () => {

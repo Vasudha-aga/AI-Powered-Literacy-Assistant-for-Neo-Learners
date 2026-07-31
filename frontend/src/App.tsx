@@ -3,6 +3,9 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AssessmentQuiz from "./pages/AssessmentQuiz";
+import Settings from "./pages/Settings";
+import { Profile, Curriculum, LearningPath } from "./pages/Placeholders";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -19,9 +22,13 @@ function App() {
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
+            <Route path="/assessment" element={<AssessmentQuiz />} />
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              {/* Add more routes here like /profile, /assessment, /learning-path */}
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/curriculum" element={<Curriculum />} />
+              <Route path="/learning-path" element={<LearningPath />} />
+              <Route path="/settings" element={<Settings />} />
             </Route>
           </Route>
         </Routes>

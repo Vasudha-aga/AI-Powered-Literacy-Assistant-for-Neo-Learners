@@ -1,0 +1,139 @@
+{
+  "signup": {
+    "title": "Create an Account",
+    "subtitle": "Join us to start learning today",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "age": "Age",
+    "gender": "Gender",
+    "education": "Education",
+    "occupation": "Occupation",
+    "preferredLanguage": "Preferred Language",
+    "district": "District",
+    "state": "State",
+    "submit": "Sign Up",
+    "creating": "Creating account...",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Log in",
+    "genderOptions": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    },
+    "educationOptions": {
+      "none": "None",
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "higher": "Higher Education"
+    },
+    "languageOptions": {
+      "en": "English",
+      "hi": "Hindi",
+      "mr": "Marathi"
+    }
+  },
+  "assessment": {
+    "title": "Literacy Assessment",
+    "subtitle": "Let's check your current level so we can personalize your learning.",
+    "submit": "Submit Quiz",
+    "next": "Next Question",
+    "results": "Assessment Results",
+    "score": "Your Score: {{score}}/10",
+    "level": "Your Level: {{level}}",
+    "continue": "Continue to Dashboard",
+    "levels": {
+      "Beginner": "Beginner Learner",
+      "Intermediate": "Intermediate Learner",
+      "Advanced": "Advanced Learner"
+    },
+    "writing": {
+      "title": "Writing Assessment",
+      "subtitle": "Please write 3-4 sentences introducing yourself and why you want to learn.",
+      "placeholder": "Type your paragraph here...",
+      "next": "Next Step"
+    },
+    "speaking": {
+      "title": "Speaking Assessment",
+      "subtitle": "Please read the following sentence out loud: 'I am learning to read and write today.'",
+      "record": "Start Recording",
+      "stop": "Stop Recording",
+      "submit": "Submit Assessment",
+      "processing": "Processing Audio..."
+    },
+    "questions": [
+      {
+        "q": "Which of these is a fruit?",
+        "options": ["Carrot", "Apple", "Potato", "Onion"],
+        "answer": "Apple"
+      },
+      {
+        "q": "What comes after Tuesday?",
+        "options": ["Monday", "Wednesday", "Friday", "Sunday"],
+        "answer": "Wednesday"
+      },
+      {
+        "q": "How many days are in a week?",
+        "options": ["5", "6", "7", "8"],
+        "answer": "7"
+      },
+      {
+        "q": "Which color is the sky on a clear day?",
+        "options": ["Green", "Red", "Blue", "Yellow"],
+        "answer": "Blue"
+      },
+      {
+        "q": "What do we drink when we are thirsty?",
+        "options": ["Sand", "Water", "Stone", "Fire"],
+        "answer": "Water"
+      },
+      {
+        "q": "Which animal barks?",
+        "options": ["Cat", "Dog", "Cow", "Bird"],
+        "answer": "Dog"
+      },
+      {
+        "q": "What do we use to see?",
+        "options": ["Ears", "Nose", "Eyes", "Hands"],
+        "answer": "Eyes"
+      },
+      {
+        "q": "Which of these is cold?",
+        "options": ["Sun", "Fire", "Ice", "Oven"],
+        "answer": "Ice"
+      },
+      {
+        "q": "Where do fishes live?",
+        "options": ["Tree", "Sky", "Water", "House"],
+        "answer": "Water"
+      },
+      {
+        "q": "What do we use to cut paper?",
+        "options": ["Spoon", "Scissors", "Hammer", "Pencil"],
+        "answer": "Scissors"
+      }
+    ]
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "learningPath": "Learning Path",
+    "assessments": "Assessments",
+    "profile": "Profile",
+    "logout": "Log out"
+  },
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Log in to continue your learning journey",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Log In",
+    "loggingIn": "Logging in...",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign up",
+    "invalid": "Invalid email or password."
+  }
+}
