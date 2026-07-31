@@ -106,6 +106,3 @@ An intelligent, multilingual literacy platform designed to help adult "neo-learn
 3. Log in to access the Dashboard.
 4. Click on **Diagnostic Assessment** to begin the reading, writing, and speaking tests.
 5. Review your detailed results and follow the suggested learning path!
-
-## License
-MIT License
