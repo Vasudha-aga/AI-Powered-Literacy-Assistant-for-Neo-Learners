@@ -43,7 +43,14 @@ const Login = () => {
       navigate('/dashboard');
     } catch (err: any) {
       console.error(err);
-      setError(err.response?.data?.detail || 'Failed to login. Please check your credentials.');
+      const detail = err.response?.data?.detail;
+      if (typeof detail === 'string') {
+        setError(detail);
+      } else if (Array.isArray(detail)) {
+        setError(detail.map((e: any) => e.msg).join(', '));
+      } else {
+        setError('Invalid email or password.');
+      }
     } finally {
       setIsLoading(false);
     }
