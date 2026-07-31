@@ -24,7 +24,7 @@ const AssessmentQuiz = () => {
   // Overall State
   const [currentStep, setCurrentStep] = useState<'mcq' | 'writing' | 'speaking' | 'results'>('mcq');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [resultLevel, setResultLevel] = useState('');
+  const [resultDetails, setResultDetails] = useState<any>(null);
 
   const questions = t('assessment.questions', { returnObjects: true }) as any[];
 
@@ -103,12 +103,19 @@ const AssessmentQuiz = () => {
         }
       });
       
-      setResultLevel(response.data.overall_level);
+      setResultDetails(response.data);
       setCurrentStep('results');
     } catch (err) {
       console.error("Failed to save complete assessment", err);
       // For fallback during dev if endpoint isn't ready
-      setResultLevel('Beginner');
+      setResultDetails({
+         overall_level: 'Beginner',
+         reading_score: score,
+         writing_score: 5.0,
+         speaking_score: 5.0,
+         overall_score: (score + 10) / 3.0,
+         feedback: '{"writing":{"overall_feedback":"Fallback"},"speaking":{"overall_feedback":"Fallback"}}'
+      });
       setCurrentStep('results');
     } finally {
       setIsSubmitting(false);
@@ -118,24 +125,62 @@ const AssessmentQuiz = () => {
   // --- Render Steps ---
 
   if (currentStep === 'results') {
+    let parsedFeedback: any = {};
+    if (resultDetails?.feedback) {
+      try {
+        parsedFeedback = JSON.parse(resultDetails.feedback);
+      } catch(e) {}
+    }
+
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4">
-        <div className="card w-full max-w-md text-center p-8">
-          <div className="flex justify-center mb-6">
-            <CheckCircle className="w-16 h-16 text-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-background p-4 py-12">
+        <div className="card w-full max-w-2xl p-8">
+          <div className="flex flex-col items-center justify-center mb-6 text-center">
+            <CheckCircle className="w-16 h-16 text-primary mb-2" />
+            <h2 className="text-2xl font-bold text-textPrimary">{t('assessment.results')}</h2>
           </div>
-          <h2 className="text-2xl font-bold text-textPrimary mb-2">{t('assessment.results')}</h2>
           
-          <div className="bg-primary/10 rounded-custom p-4 mb-8 mt-4">
-            <p className="text-xl font-semibold text-primary">
-              {t('assessment.level', { level: t(`assessment.levels.${resultLevel}`) || resultLevel })}
+          <div className="bg-primary/10 rounded-custom p-6 mb-8 mt-4 text-center">
+            <p className="text-sm font-medium text-textSecondary uppercase tracking-wider mb-1">Evaluated Literacy Level</p>
+            <p className="text-3xl font-bold text-primary">
+              {t('assessment.level', { level: t(`assessment.levels.${resultDetails?.overall_level}`) || resultDetails?.overall_level })}
+            </p>
+            <p className="mt-2 text-lg font-medium text-textPrimary">
+              Overall Score: <span className="font-bold">{resultDetails?.overall_score?.toFixed(1)} / 10</span>
             </p>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-surface rounded-custom p-4 text-center border border-borderCustom">
+               <p className="text-sm text-textSecondary mb-1">Reading</p>
+               <p className="text-2xl font-semibold text-textPrimary">{resultDetails?.reading_score?.toFixed(1)} <span className="text-sm font-normal text-textSecondary">/ 10</span></p>
+            </div>
+            <div className="bg-surface rounded-custom p-4 text-center border border-borderCustom">
+               <p className="text-sm text-textSecondary mb-1">Writing</p>
+               <p className="text-2xl font-semibold text-textPrimary">{resultDetails?.writing_score?.toFixed(1)} <span className="text-sm font-normal text-textSecondary">/ 10</span></p>
+            </div>
+            <div className="bg-surface rounded-custom p-4 text-center border border-borderCustom">
+               <p className="text-sm text-textSecondary mb-1">Speaking</p>
+               <p className="text-2xl font-semibold text-textPrimary">{resultDetails?.speaking_score?.toFixed(1)} <span className="text-sm font-normal text-textSecondary">/ 10</span></p>
+            </div>
+          </div>
+
+          <div className="space-y-4 mb-8">
+            <div className="bg-background border border-borderCustom rounded-custom p-5">
+              <h4 className="font-semibold text-textPrimary mb-2 flex items-center gap-2"><Edit3 className="w-4 h-4 text-primary" /> Writing Feedback</h4>
+              <p className="text-sm text-textSecondary leading-relaxed">{parsedFeedback?.writing?.overall_feedback || 'No feedback available.'}</p>
+            </div>
+            <div className="bg-background border border-borderCustom rounded-custom p-5">
+              <h4 className="font-semibold text-textPrimary mb-2 flex items-center gap-2"><Mic className="w-4 h-4 text-primary" /> Speaking Feedback</h4>
+              <p className="text-sm text-textSecondary leading-relaxed">{parsedFeedback?.speaking?.overall_feedback || 'No feedback available.'}</p>
+            </div>
+          </div>
+
           <button 
             onClick={() => navigate('/dashboard')}
-            className="btn-primary w-full flex items-center justify-center gap-2"
+            className="btn-primary w-full flex items-center justify-center gap-2 py-4"
           >
-            {t('assessment.continue')} <ArrowRight className="w-4 h-4" />
+            {t('assessment.continue')} <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       </div>

@@ -28,6 +28,7 @@ const Signup = () => {
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLang = e.target.value;
     setPreferredLanguage(newLang);
+    localStorage.setItem('preferred_language', newLang);
     i18n.changeLanguage(newLang);
   };
 

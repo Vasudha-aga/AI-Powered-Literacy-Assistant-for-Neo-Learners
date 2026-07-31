@@ -1,18 +1,21 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, User, BookOpen, Map, Settings, LogOut, CheckSquare } from "lucide-react";
+import { LayoutDashboard, User, BookOpen, Map, Settings, LogOut, CheckSquare, Clock } from "lucide-react";
 import { cn } from "../lib/utils";
 import { useAuth } from "../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 
 export default function Sidebar() {
   const { logout } = useAuth();
+  const { t } = useTranslation();
   
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> },
-    { name: "My Profile", path: "/profile", icon: <User size={20} /> },
-    { name: "Assessment", path: "/assessment", icon: <CheckSquare size={20} /> },
-    { name: "Learning Path", path: "/learning-path", icon: <Map size={20} /> },
-    { name: "Curriculum", path: "/curriculum", icon: <BookOpen size={20} /> },
-    { name: "Settings", path: "/settings", icon: <Settings size={20} /> },
+    { name: t('sidebar.dashboard'), path: "/dashboard", icon: <LayoutDashboard size={20} /> },
+    { name: t('sidebar.profile'), path: "/profile", icon: <User size={20} /> },
+    { name: t('sidebar.assessments'), path: "/assessment", icon: <CheckSquare size={20} /> },
+    { name: t('sidebar.learningPath'), path: "/learning-path", icon: <Map size={20} /> },
+    { name: t('sidebar.history'), path: "/history", icon: <Clock size={20} /> },
+    { name: t('sidebar.curriculum'), path: "/curriculum", icon: <BookOpen size={20} /> },
+    { name: t('sidebar.settings'), path: "/settings", icon: <Settings size={20} /> },
   ];
 
   return (
@@ -45,7 +48,7 @@ export default function Sidebar() {
           className="flex w-full items-center gap-3 px-3 py-2 text-sm font-medium text-error hover:bg-error/10 rounded-custom transition-colors"
         >
           <LogOut size={20} />
-          Logout
+          {t('sidebar.logout')}
         </button>
       </div>
     </aside>

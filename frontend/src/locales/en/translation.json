@@ -116,14 +116,34 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "welcome": "Welcome back"
+    "welcome": "Welcome back",
+    "literacyLevel": "Literacy Level",
+    "notAssessed": "Not Assessed",
+    "overallScore": "Overall Score",
+    "learningStreak": "Learning Streak",
+    "streakDays": "{{count}} Day",
+    "streakDays_plural": "{{count}} Days",
+    "todaysGoal": "Today's Goal",
+    "recommendedPath": "Recommended Learning Path",
+    "step": "Step",
+    "start": "Start",
+    "level": "Level",
+    "startLesson": "Start Lesson",
+    "completeAssessmentPrompt": "Complete your assessment to generate your personalized learning path.",
+    "diagnosticAssessment": "Diagnostic Assessment",
+    "diagnosticPrompt": "Take the comprehensive assessment (Reading, Writing, and Speaking) to unlock your personalized learning path.",
+    "retakeAssessment": "Retake Assessment",
+    "startAssessment": "Start Assessment"
   },
   "sidebar": {
     "dashboard": "Dashboard",
     "learningPath": "Learning Path",
     "assessments": "Assessments",
-    "profile": "Profile",
-    "logout": "Log out"
+    "profile": "My Profile",
+    "logout": "Logout",
+    "history": "Assessment History",
+    "curriculum": "Curriculum",
+    "settings": "Settings"
   },
   "login": {
     "title": "Welcome Back",

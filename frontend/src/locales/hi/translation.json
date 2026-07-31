@@ -116,14 +116,34 @@
   },
   "dashboard": {
     "title": "डैशबोर्ड",
-    "welcome": "वापसी पर स्वागत है"
+    "welcome": "वापसी पर स्वागत है",
+    "literacyLevel": "साक्षरता स्तर",
+    "notAssessed": "मूल्यांकन नहीं हुआ",
+    "overallScore": "कुल स्कोर",
+    "learningStreak": "सीखने की लकीर",
+    "streakDays": "{{count}} दिन",
+    "streakDays_plural": "{{count}} दिन",
+    "todaysGoal": "आज का लक्ष्य",
+    "recommendedPath": "अनुशंसित सीखने का मार्ग",
+    "step": "चरण",
+    "start": "शुरू",
+    "level": "स्तर",
+    "startLesson": "पाठ शुरू करें",
+    "completeAssessmentPrompt": "अपना व्यक्तिगत सीखने का मार्ग बनाने के लिए अपना मूल्यांकन पूरा करें।",
+    "diagnosticAssessment": "नैदानिक मूल्यांकन",
+    "diagnosticPrompt": "अपना व्यक्तिगत सीखने का मार्ग खोलने के लिए व्यापक मूल्यांकन (पढ़ना, लिखना और बोलना) लें।",
+    "retakeAssessment": "पुनर्मूल्यांकन करें",
+    "startAssessment": "मूल्यांकन शुरू करें"
   },
   "sidebar": {
     "dashboard": "डैशबोर्ड",
     "learningPath": "सीखने का मार्ग",
     "assessments": "मूल्यांकन",
-    "profile": "प्रोफ़ाइल",
-    "logout": "लॉग आउट"
+    "profile": "मेरी प्रोफ़ाइल",
+    "logout": "लॉग आउट",
+    "history": "मूल्यांकन इतिहास",
+    "curriculum": "पाठ्यक्रम",
+    "settings": "सेटिंग्स"
   },
   "login": {
     "title": "वापसी पर स्वागत है",

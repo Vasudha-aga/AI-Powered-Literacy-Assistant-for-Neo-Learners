@@ -60,7 +60,7 @@ async def submit_complete_assessment(
         writing_data = parse_json_from_llm(writing_eval.get("raw", "{}"))
     except Exception as e:
         print(f"Writing evaluation failed: {e}")
-        writing_data = {"score": 5.0, "overall_feedback": "Failed to evaluate."}
+        writing_data = {"score": 0.0, "overall_feedback": "Failed to evaluate due to server error. Please try again."}
 
     # 2. Evaluate Speech
     if voice_audio:
@@ -70,7 +70,7 @@ async def submit_complete_assessment(
             speaking_data = parse_json_from_llm(speech_eval.get("raw", "{}"))
         except Exception as e:
             print(f"Speech evaluation failed: {e}")
-            speaking_data = {"score": 5.0, "overall_feedback": "Failed to evaluate."}
+            speaking_data = {"score": 0.0, "overall_feedback": "Failed to process audio due to server error. Please try again."}
     else:
         speaking_data = {"score": 0.0, "overall_feedback": "No audio provided."}
 
@@ -145,6 +145,10 @@ async def submit_complete_assessment(
         "assessment_id": assessment.id,
         "overall_score": overall_score,
         "overall_level": overall_level,
+        "reading_score": reading_score,
+        "writing_score": w_score,
+        "speaking_score": s_score,
+        "feedback": assessment.feedback,
         "learning_path": path_data
     }
 

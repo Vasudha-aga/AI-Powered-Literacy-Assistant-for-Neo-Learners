@@ -14,6 +14,7 @@ export default function Settings() {
   const handleLanguageChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLang = e.target.value;
     setCurrentLanguage(newLang);
+    localStorage.setItem('preferred_language', newLang);
     i18n.changeLanguage(newLang);
     
     // Optionally update user profile on backend

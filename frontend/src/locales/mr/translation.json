@@ -116,14 +116,34 @@
   },
   "dashboard": {
     "title": "डॅशबोर्ड",
-    "welcome": "परत स्वागत आहे"
+    "welcome": "परत स्वागत आहे",
+    "literacyLevel": "साक्षरता पातळी",
+    "notAssessed": "मूल्यांकन केले नाही",
+    "overallScore": "एकूण गुण",
+    "learningStreak": "शिकण्याची सवय",
+    "streakDays": "{{count}} दिवस",
+    "streakDays_plural": "{{count}} दिवस",
+    "todaysGoal": "आजचे ध्येय",
+    "recommendedPath": "शिफारस केलेला शिकण्याचा मार्ग",
+    "step": "पायरी",
+    "start": "सुरू करा",
+    "level": "पातळी",
+    "startLesson": "धडा सुरू करा",
+    "completeAssessmentPrompt": "तुमचा वैयक्तिकृत शिकण्याचा मार्ग तयार करण्यासाठी तुमचे मूल्यांकन पूर्ण करा.",
+    "diagnosticAssessment": "निदान मूल्यांकन",
+    "diagnosticPrompt": "तुमचा वैयक्तिकृत शिकण्याचा मार्ग अनलॉक करण्यासाठी सर्वसमावेशक मूल्यांकन (वाचन, लेखन आणि बोलणे) घ्या.",
+    "retakeAssessment": "पुन्हा मूल्यांकन घ्या",
+    "startAssessment": "मूल्यांकन सुरू करा"
   },
   "sidebar": {
     "dashboard": "डॅशबोर्ड",
     "learningPath": "शिकण्याचा मार्ग",
     "assessments": "मूल्यांकन",
-    "profile": "प्रोफाइल",
-    "logout": "लॉग आउट"
+    "profile": "माझी प्रोफाइल",
+    "logout": "लॉग आउट",
+    "history": "मूल्यांकन इतिहास",
+    "curriculum": "अभ्यासक्रम",
+    "settings": "सेटिंग्ज"
   },
   "login": {
     "title": "परत स्वागत आहे",

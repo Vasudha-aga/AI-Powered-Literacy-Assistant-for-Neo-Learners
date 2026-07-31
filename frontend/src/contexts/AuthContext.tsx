@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           const response = await api.get('/auth/me');
           setUser(response.data);
           if (response.data.preferred_language) {
+            localStorage.setItem('preferred_language', response.data.preferred_language);
             i18n.changeLanguage(response.data.preferred_language);
           }
         } catch (error) {
@@ -56,6 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(newToken);
     setUser(userData);
     if (userData.preferred_language) {
+      localStorage.setItem('preferred_language', userData.preferred_language);
       i18n.changeLanguage(userData.preferred_language);
     }
   };

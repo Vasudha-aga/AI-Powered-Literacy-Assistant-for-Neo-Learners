@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import AssessmentQuiz from "./pages/AssessmentQuiz";
 import Settings from "./pages/Settings";
 import { Profile, Curriculum, LearningPath } from "./pages/Placeholders";
+import { AssessmentHistoryPage } from "./pages/History";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -28,6 +29,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/curriculum" element={<Curriculum />} />
               <Route path="/learning-path" element={<LearningPath />} />
+              <Route path="/history" element={<AssessmentHistoryPage />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
           </Route>
