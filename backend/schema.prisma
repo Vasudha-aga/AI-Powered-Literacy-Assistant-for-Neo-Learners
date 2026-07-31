@@ -1,0 +1,73 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "asyncio"
+  recursive_type_depth = 5
+}
+
+model User {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  email              String    @unique
+  password_hash      String
+  age                Int?
+  gender             String?
+  education          String?
+  occupation         String?
+  preferred_language String?
+  district           String?
+  state              String?
+  created_at         DateTime  @default(now())
+
+  assessments        Assessment[]
+  learning_path      LearningPath?
+}
+
+model Curriculum {
+  id       Int       @id @default(autoincrement())
+  language String
+  level    String
+  category String
+  title    String
+  content  String
+  duration Int
+
+  quizzes  Quiz[]
+}
+
+model Assessment {
+  id             Int       @id @default(autoincrement())
+  user_id        Int
+  reading_score  Float?
+  writing_score  Float?
+  speaking_score Float?
+  overall_score  Float?
+  literacy_level String?
+  feedback       String?
+  created_at     DateTime  @default(now())
+
+  user           User      @relation(fields: [user_id], references: [id])
+}
+
+model LearningPath {
+  id                Int       @id @default(autoincrement())
+  user_id           Int       @unique
+  recommended_level String
+  roadmap           Json
+
+  user              User      @relation(fields: [user_id], references: [id])
+}
+
+model Quiz {
+  id             Int        @id @default(autoincrement())
+  lesson_id      Int
+  question       String
+  options        Json
+  correct_answer String
+
+  lesson         Curriculum @relation(fields: [lesson_id], references: [id])
+}
