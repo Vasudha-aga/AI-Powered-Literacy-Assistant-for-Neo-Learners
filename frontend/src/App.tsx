@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
@@ -10,12 +10,16 @@ import { AssessmentHistoryPage } from "./pages/History";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 
+import Landing from "./pages/Landing";
+import About from "./pages/About";
+
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/about" element={<About />} />
           
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />

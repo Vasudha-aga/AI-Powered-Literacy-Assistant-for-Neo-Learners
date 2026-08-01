@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { LayoutDashboard, User, BookOpen, Map, Settings, LogOut, CheckSquare, Clock } from "lucide-react";
 import { cn } from "../lib/utils";
 import { useAuth } from "../contexts/AuthContext";
@@ -19,9 +19,9 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-cards border-r border-borderCustom h-screen sticky top-0 flex flex-col hidden md:flex">
-      <div className="p-6 border-b border-borderCustom">
-        <h1 className="text-xl font-semibold text-primary">NeoLearn AI</h1>
+    <aside className="w-64 bg-background/80 backdrop-blur-md border-r border-white/10 h-screen sticky top-0 flex flex-col hidden md:flex">
+      <div className="p-6 border-b border-white/10">
+        <Link to="/" className="text-xl font-semibold text-primary hover:text-white transition-colors">NeoLearn AI</Link>
       </div>
       <div className="flex-1 py-4 flex flex-col gap-2 px-4">
         {menuItems.map((item) => (
@@ -32,7 +32,7 @@ export default function Sidebar() {
               cn(
                 "flex items-center gap-3 px-3 py-2 rounded-custom text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-primary text-white"
+                  ? "bg-white/10 text-white"
                   : "text-textSecondary hover:bg-borderCustom/30 hover:text-textPrimary"
               )
             }

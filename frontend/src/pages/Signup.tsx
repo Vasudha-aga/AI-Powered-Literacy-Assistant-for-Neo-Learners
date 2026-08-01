@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../lib/api';
-import { BookOpen, UserPlus } from 'lucide-react';
+import { BookOpen, UserPlus, ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Signup = () => {
@@ -72,11 +72,23 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="card w-full max-w-md my-8">
+    <div className="relative min-h-screen flex items-center justify-center bg-background p-4 overflow-hidden">
+      <Link to="/" className="absolute top-6 left-6 p-3 bg-surface/20 backdrop-blur-md border border-white/10 rounded-full text-textSecondary hover:text-white hover:bg-surface/40 transition-colors z-20 flex items-center justify-center">
+        <ArrowLeft className="w-5 h-5" />
+      </Link>
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
+      >
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
+      </video>
+      <div className="card w-full max-w-md my-8 relative z-10 liquid-glass border-white/10">
         <div className="flex flex-col items-center mb-8">
           <div className="bg-primary/10 p-3 rounded-full mb-4">
-            <BookOpen className="w-8 h-8 text-primary" />
+            <BookOpen className="w-8 h-8 text-foreground" />
           </div>
           <h1 className="text-2xl font-semibold text-textPrimary">{t('signup.title')}</h1>
           <p className="text-textSecondary text-sm mt-2 text-center">

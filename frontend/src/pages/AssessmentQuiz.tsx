@@ -133,8 +133,11 @@ const AssessmentQuiz = () => {
     }
 
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4 py-12">
-        <div className="card w-full max-w-2xl p-8">
+      <div className="relative min-h-screen flex items-center justify-center bg-background p-4 py-12 overflow-hidden">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-[0.15] pointer-events-none">
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
+        </video>
+        <div className="card w-full max-w-2xl p-8 relative z-10 liquid-glass border-white/10">
           <div className="flex flex-col items-center justify-center mb-6 text-center">
             <CheckCircle className="w-16 h-16 text-primary mb-2" />
             <h2 className="text-2xl font-bold text-textPrimary">{t('assessment.results')}</h2>
@@ -189,11 +192,14 @@ const AssessmentQuiz = () => {
 
   if (currentStep === 'writing') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4 relative">
-        <button onClick={() => navigate('/dashboard')} className="absolute top-6 right-6 p-2 bg-surface rounded-full text-textSecondary hover:bg-surface/80">
+      <div className="relative min-h-screen flex items-center justify-center bg-background p-4 overflow-hidden">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-[0.15] pointer-events-none">
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
+        </video>
+        <button onClick={() => navigate('/dashboard')} className="absolute top-6 right-6 p-2 bg-surface rounded-full text-textSecondary hover:bg-surface/80 z-20">
           <X className="w-6 h-6" />
         </button>
-        <div className="card w-full max-w-2xl">
+        <div className="card w-full max-w-2xl relative z-10 liquid-glass border-white/10">
           <div className="flex items-center gap-3 mb-6 pb-6 border-b border-surface">
             <div className="bg-primary/10 p-2 rounded-lg">
               <Edit3 className="w-6 h-6 text-primary" />
@@ -225,11 +231,14 @@ const AssessmentQuiz = () => {
 
   if (currentStep === 'speaking') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4 relative">
-        <button onClick={() => navigate('/dashboard')} className="absolute top-6 right-6 p-2 bg-surface rounded-full text-textSecondary hover:bg-surface/80">
+      <div className="relative min-h-screen flex items-center justify-center bg-background p-4 overflow-hidden">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-[0.15] pointer-events-none">
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
+        </video>
+        <button onClick={() => navigate('/dashboard')} className="absolute top-6 right-6 p-2 bg-surface rounded-full text-textSecondary hover:bg-surface/80 z-20">
           <X className="w-6 h-6" />
         </button>
-        <div className="card w-full max-w-2xl text-center">
+        <div className="card w-full max-w-2xl text-center relative z-10 liquid-glass border-white/10">
           <div className="flex items-center gap-3 mb-6 pb-6 border-b border-surface text-left">
             <div className="bg-primary/10 p-2 rounded-lg">
               <Mic className="w-6 h-6 text-primary" />
@@ -279,11 +288,14 @@ const AssessmentQuiz = () => {
   if (!currentQ) return null;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4 relative">
-      <button onClick={() => navigate('/dashboard')} className="absolute top-6 right-6 p-2 bg-surface rounded-full text-textSecondary hover:bg-surface/80">
+    <div className="relative min-h-screen flex items-center justify-center bg-background p-4 overflow-hidden">
+      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-[0.15] pointer-events-none">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
+      </video>
+      <button onClick={() => navigate('/dashboard')} className="absolute top-6 right-6 p-2 bg-surface rounded-full text-textSecondary hover:bg-surface/80 z-20">
         <X className="w-6 h-6" />
       </button>
-      <div className="card w-full max-w-2xl">
+      <div className="card w-full max-w-2xl relative z-10 liquid-glass border-white/10">
         <div className="flex items-center gap-3 mb-6 pb-6 border-b border-surface">
           <div className="bg-primary/10 p-2 rounded-lg">
             <BookOpen className="w-6 h-6 text-primary" />
