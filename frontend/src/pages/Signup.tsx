@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import api from '../lib/api';
 import { BookOpen, UserPlus, ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +24,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -52,8 +54,28 @@ const Signup = () => {
         state: state || null,
       });
 
-      // Redirect to login after signup
-      navigate('/login');
+      // 2. Automatically login
+      const formData = new URLSearchParams();
+      formData.append('username', email);
+      formData.append('password', password);
+
+      const loginRes = await api.post('/auth/login', formData, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      
+      const token = loginRes.data.access_token;
+      
+      // Fetch user details
+      const userResponse = await api.get('/auth/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      login(token, userResponse.data);
+
+      // Redirect to assessment after signup
+      navigate('/assessment');
     } catch (err: any) {
       console.error("Signup error:", err);
       const detail = err.response?.data?.detail;

@@ -6,8 +6,8 @@ import uuid
 
 genai.configure(api_key=settings.LLM_API_KEY)
 
-# Use Gemini 1.5 Flash for faster audio processing
-model = genai.GenerativeModel('gemini-1.5-flash')
+# Use Gemini 3.5 Flash for faster audio processing
+model = genai.GenerativeModel('gemini-3.5-flash')
 
 async def evaluate_speech(audio_bytes: bytes, mime_type: str = "audio/webm") -> dict:
     """

@@ -5,8 +5,8 @@ from core.config import settings
 # Configure Gemini API
 genai.configure(api_key=settings.LLM_API_KEY)
 
-# Use gemini-1.5-flash as the default model
-model = genai.GenerativeModel('gemini-1.5-flash')
+# Use gemini-3.5-flash as the default model
+model = genai.GenerativeModel('gemini-3.5-flash')
 
 async def evaluate_writing(prompt_text: str, user_response: str) -> dict:
     prompt = f"""
