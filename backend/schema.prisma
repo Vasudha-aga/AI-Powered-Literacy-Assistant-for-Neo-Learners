@@ -25,18 +25,22 @@ model User {
 
   assessments        Assessment[]
   learning_path      LearningPath?
+  user_progress      UserProgress[]
 }
 
 model Curriculum {
-  id       Int       @id @default(autoincrement())
-  language String
-  level    String
-  category String
-  title    String
-  content  String
-  duration Int
+  id        Int       @id @default(autoincrement())
+  language  String
+  level     String
+  category  String
+  title     String
+  content   String
+  duration  Int
+  user_id   Int?      // Null if standard lesson, set if custom lesson
+  is_custom Boolean   @default(false)
 
-  quizzes  Quiz[]
+  quizzes        Quiz[]
+  user_progress  UserProgress[]
 }
 
 model Assessment {
@@ -70,4 +74,18 @@ model Quiz {
   correct_answer String
 
   lesson         Curriculum @relation(fields: [lesson_id], references: [id])
+}
+
+model UserProgress {
+  id            Int        @id @default(autoincrement())
+  user_id       Int
+  curriculum_id Int
+  status        String     // e.g., "in_progress", "completed"
+  score         Float?
+  attempts      Int        @default(1)
+  history       Json       @default("[]")
+  completed_at  DateTime?  @default(now())
+
+  user          User       @relation(fields: [user_id], references: [id])
+  curriculum    Curriculum @relation(fields: [curriculum_id], references: [id])
 }

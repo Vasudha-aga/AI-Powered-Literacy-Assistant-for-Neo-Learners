@@ -30,9 +30,10 @@ app.add_middleware(
 def root():
     return {"message": "Welcome to AI Literacy Platform API"}
 
-from routers import auth, curriculum, assessment
+from routers import auth, curriculum, assessment, learning_path
 
 # We will include routers here
 app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
 app.include_router(curriculum.router, prefix=f"{settings.API_V1_STR}/curriculum", tags=["curriculum"])
 app.include_router(assessment.router, prefix=f"{settings.API_V1_STR}/assessment", tags=["assessment"])
+app.include_router(learning_path.router, prefix=f"{settings.API_V1_STR}/learning_path", tags=["learning_path"])

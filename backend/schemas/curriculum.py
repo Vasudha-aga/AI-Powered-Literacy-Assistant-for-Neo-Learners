@@ -24,6 +24,8 @@ class CurriculumUpdate(BaseModel):
 
 class CurriculumInDB(CurriculumBase):
     id: int
+    is_custom: Optional[bool] = False
+    user_id: Optional[int] = None
 
     class Config:
         from_attributes = True

@@ -22,22 +22,6 @@ export function Profile() {
   );
 }
 
-export function LearningPath() {
-  return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-semibold text-textPrimary tracking-tight">Learning Path</h1>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2"><Map /> Roadmap</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-textSecondary">Your personalized roadmap will appear here in detail.</p>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
-
 export function Curriculum() {
   return (
     <div className="flex items-center justify-center min-h-[50vh]">
