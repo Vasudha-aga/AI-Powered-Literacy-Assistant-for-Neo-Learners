@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from core.config import settings
-from database.database import get_db, Prisma
+from database.database import get_db
 from schemas.user import TokenData
 from prisma.models import User
 
@@ -20,13 +20,16 @@ async def get_current_user(
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
-        email: str = payload.get("sub")
-        if email is None:
+        email = payload.get("sub")
+        if not email or not isinstance(email, str):
             raise credentials_exception
         token_data = TokenData(email=email)
     except JWTError:
         raise credentials_exception
         
+    if not token_data.email:
+        raise credentials_exception
+
     db = get_db()
     user = await db.user.find_unique(where={"email": token_data.email})
     if user is None:

@@ -1,0 +1,21 @@
+{
+  "typeCheckingMode": "off",
+  "include": [
+    "."
+  ],
+  "extraPaths": [
+    ".",
+    "venv/Lib/site-packages"
+  ],
+  "venvPath": ".",
+  "venv": "venv",
+  "reportMissingImports": "none",
+  "reportMissingTypeStubs": "none",
+  "reportUnusedImport": "none",
+  "reportUnusedVariable": "none",
+  "reportGeneralTypeIssues": "none",
+  "reportOptionalMemberAccess": "none",
+  "reportOptionalSubscript": "none",
+  "reportPrivateImportUsage": "none",
+  "reportWildcardImportFromLibrary": "none"
+}

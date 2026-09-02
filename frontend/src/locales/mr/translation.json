@@ -137,6 +137,9 @@
   },
   "sidebar": {
     "dashboard": "डॅशबोर्ड",
+    "voice": "आवाज शिक्षण",
+    "achievements": "उपलब्धी आणि सातत्य",
+    "reports": "प्रगती अहवाल",
     "learningPath": "शिकण्याचा मार्ग",
     "assessments": "मूल्यांकन",
     "profile": "माझी प्रोफाइल",

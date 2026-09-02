@@ -84,11 +84,12 @@ async def get_content_recommendations(user_id: int) -> list[dict]:
     completed_ids = [p.curriculum_id for p in progress if p.status == "completed"]
     
     # 3. Find lessons that match the level and are not completed
+    where_match: dict = {"level": level}
+    if completed_ids:
+        where_match["id"] = {"notIn": completed_ids}
+
     available_lessons = await db.curriculum.find_many(
-        where={
-            "level": level,
-            "id": {"notIn": completed_ids} if completed_ids else None
-        },
+        where=where_match,  # type: ignore
         take=3
     )
     
@@ -104,10 +105,12 @@ async def get_content_recommendations(user_id: int) -> list[dict]:
         
     # If no lessons match, we might fall back to other levels
     if not recommendations:
+        where_fallback: dict = {}
+        if completed_ids:
+            where_fallback["id"] = {"notIn": completed_ids}
+
         other_lessons = await db.curriculum.find_many(
-            where={
-                "id": {"notIn": completed_ids} if completed_ids else None
-            },
+            where=where_fallback if where_fallback else None,  # type: ignore
             take=3
         )
         for lesson in other_lessons:

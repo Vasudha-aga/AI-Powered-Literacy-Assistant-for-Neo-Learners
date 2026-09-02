@@ -1,6 +1,6 @@
 import json
 import re
-from typing import Optional
+from typing import Optional, Any, Dict, List
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, File, Form, UploadFile
 from auth.deps import get_current_user
@@ -8,7 +8,7 @@ from database.database import get_db
 from schemas.curriculum import AssessmentInDB
 from services.llm import evaluate_writing, generate_learning_path
 from services.speech import evaluate_speech
-from prisma.models import User, Assessment, LearningPath
+from prisma.models import User
 
 router = APIRouter()
 
@@ -18,6 +18,8 @@ class QuizResultCreate(BaseModel):
 
 def parse_json_from_llm(raw_text: str) -> dict:
     """Helper to extract JSON from LLM response which might have markdown formatting."""
+    if not raw_text:
+        return {}
     # Try to find a JSON block in the text
     match = re.search(r'```(?:json)?(.*?)```', raw_text, re.DOTALL)
     json_str = match.group(1).strip() if match else raw_text.strip()
@@ -51,8 +53,8 @@ async def submit_complete_assessment(
 ):
     db = get_db()
     
-    writing_data = {}
-    speaking_data = {}
+    writing_data: Dict[str, Any] = {}
+    speaking_data: Dict[str, Any] = {}
     
     # 1. Evaluate Writing
     try:
@@ -77,12 +79,12 @@ async def submit_complete_assessment(
     # 3. Calculate Overall
     w_score = float(writing_data.get("score", 5.0))
     s_score = float(speaking_data.get("score", 5.0))
-    overall_score = (reading_score + w_score + s_score) / 3.0
+    overall_score = round((reading_score + w_score + s_score) / 3.0, 2)
     
     overall_level = "Beginner"
-    if overall_score >= 4 and overall_score <= 7:
+    if 4.0 <= overall_score <= 7.0:
         overall_level = "Intermediate"
-    elif overall_score > 7:
+    elif overall_score > 7.0:
         overall_level = "Advanced"
 
     # 4. Generate Learning Path
@@ -95,7 +97,7 @@ async def submit_complete_assessment(
         "speaking_feedback": speaking_data.get("overall_feedback", "")
     }
     
-    path_data = {}
+    path_data: Dict[str, Any] = {}
     try:
         path_eval = await generate_learning_path(assessment_data)
         path_data = parse_json_from_llm(path_eval.get("raw", "{}"))
@@ -119,9 +121,12 @@ async def submit_complete_assessment(
     )
 
     # 6. Upsert Learning Path
-    # Prisma Python upsert syntax
     if path_data:
         try:
+            roadmap_raw = path_data.get("roadmap", [])
+            roadmap_val = json.dumps(roadmap_raw) if isinstance(roadmap_raw, (list, dict)) else str(roadmap_raw)
+            rec_level = str(path_data.get("recommended_level", overall_level))
+            
             await db.learningpath.upsert(
                 where={
                     "user_id": current_user.id
@@ -129,12 +134,12 @@ async def submit_complete_assessment(
                 data={
                     "create": {
                         "user_id": current_user.id,
-                        "recommended_level": path_data.get("recommended_level", overall_level),
-                        "roadmap": json.dumps(path_data.get("roadmap", []))
+                        "recommended_level": rec_level,
+                        "roadmap": roadmap_val  # type: ignore
                     },
                     "update": {
-                        "recommended_level": path_data.get("recommended_level", overall_level),
-                        "roadmap": json.dumps(path_data.get("roadmap", []))
+                        "recommended_level": rec_level,
+                        "roadmap": roadmap_val  # type: ignore
                     }
                 }
             )
@@ -159,9 +164,16 @@ async def get_learning_path(current_user: User = Depends(get_current_user)):
     if not path:
         return None
     
+    roadmap_data = path.roadmap
+    if isinstance(roadmap_data, str):
+        try:
+            roadmap_data = json.loads(roadmap_data)
+        except Exception:
+            pass
+            
     return {
         "recommended_level": path.recommended_level,
-        "roadmap": json.loads(path.roadmap) if isinstance(path.roadmap, str) else path.roadmap
+        "roadmap": roadmap_data
     }
 
 @router.get("/history")
@@ -180,5 +192,3 @@ async def get_assessment(id: int, current_user: User = Depends(get_current_user)
     if not assessment or assessment.user_id != current_user.id:
         raise HTTPException(status_code=404, detail="Assessment not found")
     return assessment
-
-

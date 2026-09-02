@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../components/ui/Card";
+import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw } from "lucide-react";
 import api from "../lib/api";

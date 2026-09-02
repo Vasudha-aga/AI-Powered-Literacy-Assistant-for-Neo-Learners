@@ -1,0 +1,30 @@
+{
+  "typeCheckingMode": "off",
+  "include": [
+    "backend"
+  ],
+  "executionEnvironments": [
+    {
+      "root": "backend",
+      "extraPaths": [
+        "backend",
+        "."
+      ]
+    }
+  ],
+  "extraPaths": [
+    "backend",
+    "backend/venv/Lib/site-packages"
+  ],
+  "venvPath": "backend",
+  "venv": "venv",
+  "reportMissingImports": "none",
+  "reportMissingTypeStubs": "none",
+  "reportUnusedImport": "none",
+  "reportUnusedVariable": "none",
+  "reportGeneralTypeIssues": "none",
+  "reportOptionalMemberAccess": "none",
+  "reportOptionalSubscript": "none",
+  "reportPrivateImportUsage": "none",
+  "reportWildcardImportFromLibrary": "none"
+}

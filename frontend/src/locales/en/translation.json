@@ -137,6 +137,9 @@
   },
   "sidebar": {
     "dashboard": "Dashboard",
+    "voice": "Voice Learning",
+    "achievements": "Achievements & Streaks",
+    "reports": "Learning Reports",
     "learningPath": "Learning Path",
     "assessments": "Assessments",
     "profile": "My Profile",

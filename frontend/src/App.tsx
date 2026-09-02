@@ -10,6 +10,9 @@ import { Profile } from "./pages/Placeholders";
 import LearningPath from "./pages/LearningPath";
 import LessonView from "./pages/LessonView";
 import { AssessmentHistoryPage } from "./pages/History";
+import VoiceLearning from "./pages/VoiceLearning";
+import Achievements from "./pages/Achievements";
+import LearningReports from "./pages/LearningReports";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import Landing from "./pages/Landing";
@@ -30,6 +33,9 @@ function App() {
             <Route path="/assessment" element={<AssessmentQuiz />} />
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/voice" element={<VoiceLearning />} />
+              <Route path="/achievements" element={<Achievements />} />
+              <Route path="/reports" element={<LearningReports />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/curriculum" element={<Curriculum />} />
               <Route path="/learning-path" element={<LearningPath />} />

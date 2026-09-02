@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/Card";
-import { User, Map } from "lucide-react";
+import { User } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 
 export function Profile() {

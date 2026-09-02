@@ -129,7 +129,7 @@ const AssessmentQuiz = () => {
     if (resultDetails?.feedback) {
       try {
         parsedFeedback = JSON.parse(resultDetails.feedback);
-      } catch(e) {}
+      } catch {}
     }
 
     return (

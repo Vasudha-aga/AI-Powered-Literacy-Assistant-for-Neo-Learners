@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from auth.deps import get_current_user
 from database.database import get_db
 from schemas.curriculum import CurriculumCreate, CurriculumUpdate, CurriculumInDB
-from prisma.models import User, Curriculum
+from prisma.models import User
 
 router = APIRouter()
 
