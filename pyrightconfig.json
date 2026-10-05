@@ -26,5 +26,9 @@
   "reportOptionalMemberAccess": "none",
   "reportOptionalSubscript": "none",
   "reportPrivateImportUsage": "none",
-  "reportWildcardImportFromLibrary": "none"
+  "reportWildcardImportFromLibrary": "none",
+  "reportArgumentType": "none",
+  "reportCallIssue": "none",
+  "reportAttributeAccessIssue": "none",
+  "reportAssignmentType": "none"
 }

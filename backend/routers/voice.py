@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Dict, Optional, Any, cast
 from fastapi import APIRouter, Depends, File, Form, UploadFile
 from auth.deps import get_current_user
 from prisma.models import User

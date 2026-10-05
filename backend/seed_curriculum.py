@@ -1,5 +1,6 @@
 import asyncio
 import json
+from typing import Any, cast
 from prisma import Prisma
 
 async def main():
@@ -77,19 +78,21 @@ async def main():
     count = 0
     for lesson in lessons:
         # Check if already exists to prevent duplicates on multiple runs
-        existing = await db.curriculum.find_first(where={"title": lesson["title"]})
+        title = str(lesson.get("title", ""))
+        existing = await db.curriculum.find_first(where=cast(Any, {"title": title}))
         if not existing:
-            quiz_data = lesson.pop("quiz")
-            created = await db.curriculum.create(data=lesson)
-            for q in quiz_data:
-                await db.quiz.create(data={
-                    "lesson_id": created.id,
-                    "question": q["question"],
-                    "options": json.dumps(q["options"]),
-                    "correct_answer": q["correct_answer"]
-                })
-            count += 1
-            print(f"Created lesson: {created.title}")
+            quiz_data = cast(list, lesson.pop("quiz", []))
+            created = await db.curriculum.create(data=cast(Any, lesson))
+            if created:
+                for q in quiz_data:
+                    await db.quiz.create(data=cast(Any, {
+                        "lesson_id": created.id,
+                        "question": q["question"],
+                        "options": json.dumps(q["options"]),
+                        "correct_answer": q["correct_answer"]
+                    }))
+                count += 1
+                print(f"Created lesson: {created.title}")
             
     print(f"Seeding complete. Added {count} new lessons.")
     await db.disconnect()

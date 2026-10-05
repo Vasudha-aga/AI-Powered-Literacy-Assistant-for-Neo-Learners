@@ -1,6 +1,6 @@
 import json
 import re
-from typing import Optional, Any, Dict, List
+from typing import Optional, Any, Dict, cast
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, File, Form, UploadFile
 from auth.deps import get_current_user
@@ -34,12 +34,12 @@ async def save_quiz_result(result: QuizResultCreate, current_user: User = Depend
     db = get_db()
     
     assessment = await db.assessment.create(
-        data={
+        data=cast(Any, {
             "user_id": current_user.id,
             "overall_score": result.score,
             "literacy_level": result.literacy_level,
             "feedback": "Initial signup quiz"
-        }
+        })
     )
     
     return assessment
@@ -106,7 +106,7 @@ async def submit_complete_assessment(
 
     # 5. Save Assessment
     assessment = await db.assessment.create(
-        data={
+        data=cast(Any, {
             "user_id": current_user.id,
             "reading_score": reading_score,
             "writing_score": w_score,
@@ -117,7 +117,7 @@ async def submit_complete_assessment(
                 "writing": writing_data,
                 "speaking": speaking_data
             })
-        }
+        })
     )
 
     # 6. Upsert Learning Path

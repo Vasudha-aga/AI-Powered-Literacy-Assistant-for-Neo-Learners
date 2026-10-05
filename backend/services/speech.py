@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any
 from core.config import settings
 from services.pronunciation import evaluate_pronunciation_heuristic
 

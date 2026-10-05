@@ -1,4 +1,3 @@
-import json
 from datetime import datetime, date, timedelta
 from typing import Dict, List, Any
 from database.database import get_db

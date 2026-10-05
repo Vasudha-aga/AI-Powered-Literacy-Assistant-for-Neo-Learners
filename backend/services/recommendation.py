@@ -1,5 +1,4 @@
 import json
-from prisma.models import User, Curriculum, UserProgress, Assessment
 from database.database import get_db
 from services.llm import model
 

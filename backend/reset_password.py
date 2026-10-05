@@ -1,5 +1,4 @@
 import asyncio
-import json
 from prisma import Prisma
 import bcrypt
 

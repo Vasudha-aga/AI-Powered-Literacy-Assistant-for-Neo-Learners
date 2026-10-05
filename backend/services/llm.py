@@ -1,12 +1,15 @@
-import os
+import json
+from typing import Any, cast
 import google.generativeai as genai
 from core.config import settings
+from database.database import get_db
 
 # Configure Gemini API
-genai.configure(api_key=settings.LLM_API_KEY)
+if settings.LLM_API_KEY:
+    genai.configure(api_key=settings.LLM_API_KEY)
 
 # Use gemini-3.6-flash as the default model
-model = genai.GenerativeModel('gemini-3.6-flash')
+model: Any = genai.GenerativeModel('gemini-3.6-flash')
 
 async def evaluate_writing(prompt_text: str, user_response: str) -> dict:
     prompt = f"""
@@ -57,9 +60,6 @@ async def generate_learning_path(assessment_data: dict) -> dict:
     return {"raw": response.text}
 
 async def generate_personalized_lesson(topic: str, proficiency_level: str, user_id: int) -> dict:
-    from database.database import get_db
-    import json
-    
     prompt = f"""
     You are an expert AI literacy tutor. Generate a personalized mini-lesson for a user.
     Topic: {topic}
@@ -99,7 +99,7 @@ async def generate_personalized_lesson(topic: str, proficiency_level: str, user_
     
     # Create Curriculum
     curriculum = await db.curriculum.create(
-        data={
+        data=cast(Any, {
             "language": "English",
             "level": proficiency_level,
             "category": "Custom Generation",
@@ -108,18 +108,18 @@ async def generate_personalized_lesson(topic: str, proficiency_level: str, user_
             "duration": lesson_data.get("suggested_duration", 5),
             "user_id": user_id,
             "is_custom": True
-        }
+        })
     )
     
     # Create Quizzes
     for q in lesson_data["quiz"]:
         await db.quiz.create(
-            data={
+            data=cast(Any, {
                 "lesson_id": curriculum.id,
                 "question": q["question"],
                 "options": json.dumps(q["options"]),
                 "correct_answer": q["correct_answer"]
-            }
+            })
         )
         
     lesson_data["curriculum_id"] = curriculum.id

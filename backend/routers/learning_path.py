@@ -1,10 +1,10 @@
-from typing import List, Any
+from typing import List, Any, cast
 import json
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from auth.deps import get_current_user
 from database.database import get_db
-from prisma.models import User, UserProgress, Curriculum
+from prisma.models import User
 from schemas.learning_path import (
     UserProgressCreate,
     UserProgressInDB,
@@ -93,18 +93,18 @@ async def update_progress(progress_in: UserProgressCreate, current_user: User = 
 
         updated = await db.userprogress.update(
             where={"id": existing.id},
-            data={
+            data=cast(Any, {
                 "status": progress_in.status,
                 "score": highest_score,
                 "attempts": existing.attempts + 1,
                 "history": json.dumps(current_history),
                 "completed_at": datetime.now()
-            }
+            })
         )
         return updated
     else:
         created = await db.userprogress.create(
-            data={
+            data=cast(Any, {
                 "user_id": current_user.id,
                 "curriculum_id": progress_in.curriculum_id,
                 "status": progress_in.status,
@@ -112,7 +112,7 @@ async def update_progress(progress_in: UserProgressCreate, current_user: User = 
                 "attempts": 1,
                 "history": json.dumps([new_history_entry]),
                 "completed_at": datetime.now()
-            }
+            })
         )
         return created
 

@@ -1,5 +1,4 @@
 import re
-import json
 from typing import List, Dict, Any, Optional
 
 def calculate_word_similarity(w1: str, w2: str) -> float:

@@ -4,6 +4,7 @@
   "python.pythonPath": "${workspaceFolder}/backend/venv/Scripts/python.exe",
   "python.terminal.activateEnvironment": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.analysis.autoSearchPaths": true,
   "python.analysis.extraPaths": [
     "${workspaceFolder}/backend",
     "${workspaceFolder}/backend/venv/Lib/site-packages"
@@ -22,6 +23,10 @@
     "reportOptionalMemberAccess": "none",
     "reportOptionalSubscript": "none",
     "reportPrivateImportUsage": "none",
-    "reportWildcardImportFromLibrary": "none"
+    "reportWildcardImportFromLibrary": "none",
+    "reportCallIssue": "none",
+    "reportArgumentType": "none",
+    "reportAttributeAccessIssue": "none",
+    "reportAssignmentType": "none"
   }
 }

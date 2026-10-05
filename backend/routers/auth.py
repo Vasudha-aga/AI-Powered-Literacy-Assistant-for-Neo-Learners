@@ -1,5 +1,6 @@
 from datetime import timedelta
-from fastapi import APIRouter, Depends, HTTPException, status
+from typing import Any, cast
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from auth.deps import get_current_user
 from auth.security import verify_password, get_password_hash, create_access_token
@@ -16,7 +17,7 @@ async def register(user_in: UserCreate):
     db = get_db()
     try:
         user_obj = await db.user.create(
-            data={
+            data=cast(Any, {
                 "email": user_in.email,
                 "password_hash": get_password_hash(user_in.password),
                 "name": user_in.name,
@@ -27,7 +28,7 @@ async def register(user_in: UserCreate):
                 "preferred_language": user_in.preferred_language,
                 "district": user_in.district,
                 "state": user_in.state
-            }
+            })
         )
         return user_obj
     except UniqueViolationError:
@@ -58,8 +59,10 @@ async def update_profile(user_in: UserUpdate, current_user: User = Depends(get_c
     db = get_db()
     update_data = user_in.dict(exclude_unset=True)
     if update_data:
-        current_user = await db.user.update(
+        updated_user = await db.user.update(
             where={"id": current_user.id},
-            data=update_data
+            data=cast(Any, update_data)
         )
+        if updated_user is not None:
+            return updated_user
     return current_user

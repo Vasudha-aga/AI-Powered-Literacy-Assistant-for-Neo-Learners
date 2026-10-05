@@ -1,7 +1,5 @@
-import json
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 from typing import Dict, List, Any, Optional
-from database.database import get_db
 
 BADGE_DEFINITIONS = [
     {

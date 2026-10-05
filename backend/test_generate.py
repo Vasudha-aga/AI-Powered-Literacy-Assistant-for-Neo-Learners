@@ -1,7 +1,4 @@
 import asyncio
-import json
-from prisma import Prisma
-import os
 from services.llm import generate_personalized_lesson
 
 async def main():

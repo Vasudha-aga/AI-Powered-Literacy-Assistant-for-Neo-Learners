@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any, cast
 from fastapi import APIRouter, Depends, HTTPException
 from auth.deps import get_current_user
 from database.database import get_db
@@ -16,7 +16,7 @@ async def get_curriculums(current_user: User = Depends(get_current_user)):
 async def create_curriculum(curriculum_in: CurriculumCreate, current_user: User = Depends(get_current_user)):
     db = get_db()
     curriculum = await db.curriculum.create(
-        data=curriculum_in.dict()
+        data=cast(Any, curriculum_in.dict())
     )
     return curriculum
 
@@ -37,7 +37,7 @@ async def update_curriculum(id: int, curriculum_in: CurriculumUpdate, current_us
         
     curriculum = await db.curriculum.update(
         where={"id": id},
-        data=update_data
+        data=cast(Any, update_data)
     )
     return curriculum
 
