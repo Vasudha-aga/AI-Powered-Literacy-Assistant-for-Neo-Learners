@@ -1,108 +1,196 @@
-# AI Powered Literacy Assistant for Neo Learners
+# 🎓 AI Powered Literacy Assistant for Neo Learners
 
-An intelligent, multilingual literacy platform designed to help adult "neo-learners" assess their literacy levels, track their progress, and follow a personalized learning path. The platform utilizes AI (Large Language Models) to evaluate reading, writing, and speaking skills and provides comprehensive feedback tailored to the learner's abilities.
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20on%20Vercel-brightgreen?style=for-the-badge&logo=vercel)](https://ai-powered-literacy-assistant-for-n.vercel.app/)
+[![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript%20%7C%20Vite-61DAFB?style=for-the-badge&logo=react)](https://ai-powered-literacy-assistant-for-n.vercel.app/)
+[![Backend](https://img.shields.io/badge/Backend-FastAPI%20%7C%20Python-009688?style=for-the-badge&logo=fastapi)](https://render.com)
+[![Database](https://img.shields.io/badge/Database-Supabase%20PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com)
+[![AI Engine](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?style=for-the-badge&logo=google)](https://ai.google.dev/)
 
-## Features
-- **Multilingual Support**: Fully localized in English, Hindi (हिन्दी), and Marathi (मराठी). The entire UI, including assessments and learning paths, switches dynamically.
-- **Diagnostic Literacy Assessment**:
-  - **Reading**: Multiple-choice questions to test basic comprehension.
-  - **Writing**: Free-text prompt evaluated by AI for grammar, spelling, and coherence.
-  - **Speaking**: Voice recording evaluated by AI for pronunciation and fluency.
-- **AI-Powered Evaluation**: Computes individual scores out of 10 and assigns an overall literacy level (Beginner, Intermediate, Advanced) along with detailed feedback.
-- **Personalized Dashboard**: Track learning streaks, daily goals, assessment history, and recommended learning roadmaps.
+An intelligent, interactive, multilingual literacy platform designed specifically for adult **neo-learners** to diagnose reading, writing, and speech proficiency, receive AI-powered feedback, and follow dynamically generated personalized learning paths.
 
-## Tech Stack
-### Frontend
-- React.js + TypeScript
-- Vite (Build Tool)
-- Tailwind CSS (Styling)
-- `react-i18next` (Internationalization)
-- Lucide React (Icons)
+🔗 **Live Application URL**: [https://ai-powered-literacy-assistant-for-n.vercel.app/](https://ai-powered-literacy-assistant-for-n.vercel.app/)
 
-### Backend
-- FastAPI (Python Framework)
-- Prisma (ORM for database interactions)
-- PostgreSQL (or SQLite for local dev)
-- Google Gemini API (for AI evaluation)
+---
 
-## Project Structure
-```text
-.
-├── backend/            # FastAPI python application
-│   ├── core/           # Configuration and settings
-│   ├── auth/           # Authentication logic (JWT)
-│   ├── routers/        # API endpoints (Auth, Assessment)
-│   ├── services/       # LLM integrations for evaluating text & speech
-│   └── prisma/         # Prisma schema and migrations
-└── frontend/           # React + Vite application
-    ├── src/
-    │   ├── components/ # Reusable UI components (Cards, etc.)
-    │   ├── contexts/   # React contexts (AuthContext)
-    │   ├── lib/        # Axios API configurations and i18n
-    │   ├── locales/    # JSON translation files (en, hi, mr)
-    │   └── pages/      # Views (Dashboard, Quiz, Settings, Signup, etc.)
+## 🌟 Key Features
+
+- **🌐 Multilingual & Regional Support**: Full UI and content localization in **English**, **Hindi (हिन्दी)**, and **Marathi (मराठी)** with dynamic language switching.
+- **🎙️ AI Voice Pronunciation & Speaking Practice**:
+  - Word-by-word accuracy, fluency, and completeness scoring.
+  - Phoneme-level breakdowns and phonetic pronunciation guides.
+  - Multi-difficulty speech drills and tongue twisters.
+- **📝 Diagnostic 3-in-1 Literacy Assessment**:
+  - **Reading**: Comprehension and contextual reading tests.
+  - **Writing**: Free-text prompts evaluated by Gemini AI for grammar, coherence, and vocabulary.
+  - **Speaking**: Real-time microphone audio evaluation with instant transcription and acoustic analysis.
+- **🤖 Dynamic AI Curriculum & Lesson Generator**:
+  - Personalized mini-lessons and adaptive quizzes tailored to individual proficiency levels.
+  - Custom topic generation powered by Google Gemini.
+- **🏆 Gamification & Motivation Engine**:
+  - Daily learning streaks, XP point progression, and level badges (Seed 🌱 → Tree 🌳 → Crown 👑).
+  - Daily interactive quests and live leaderboard standings.
+- **📊 Detailed Analytics & Progress Reports**:
+  - Comprehensive skill radar and historical competency trajectories.
+  - Targeted recommendations and downloadable performance insights.
+
+---
+
+## 🏗️ Architecture & Tech Stack
+
+```mermaid
+graph LR
+    User[Learner] -->|Web Browser| Frontend[React + TypeScript SPA on Vercel]
+    Frontend -->|REST API Requests| Backend[FastAPI Server on Render]
+    Backend -->|LLM & Audio Analysis| Gemini[Google Gemini AI]
+    Backend -->|ORM Queries| Prisma[Prisma Python Client]
+    Prisma -->|Pooled Connection| DB[(Supabase PostgreSQL)]
 ```
 
-## Setup Instructions
+### **Frontend**
+- **Framework**: React.js (TypeScript) + Vite
+- **Styling**: Tailwind CSS + Custom Design System
+- **Icons**: Lucide React
+- **Internationalization**: `react-i18next`
+- **HTTP Client**: Axios with JWT interceptors
+- **Hosting**: [Vercel](https://vercel.com)
 
-### 1. Prerequisites
+### **Backend**
+- **Framework**: FastAPI (Python 3.11)
+- **ASGI Server**: Uvicorn with lifespan management
+- **ORM**: Prisma Client Python
+- **AI / LLM**: Google Gemini API (`google-generativeai`)
+- **Authentication**: OAuth2 Password Bearer with JWT (Python-Jose + Passlib/Bcrypt)
+- **Database**: PostgreSQL (Supabase Connection Pooler)
+- **Hosting**: [Render](https://render.com)
+
+---
+
+## 📁 Project Structure
+
+```text
+├── backend/
+│   ├── auth/              # JWT authentication & security dependencies
+│   ├── core/              # App configuration & settings
+│   ├── database/          # Prisma database connection handlers
+│   ├── routers/           # FastAPI routers (auth, curriculum, assessment, voice, etc.)
+│   ├── schemas/           # Pydantic data schemas
+│   ├── services/          # AI LLM, Speech evaluation, Gamification, Reports
+│   ├── schema.prisma      # Prisma schema definitions
+│   ├── seed_curriculum.py # Curriculum seeding script
+│   └── requirements.txt   # Python production dependencies
+└── frontend/
+    ├── public/            # Static assets
+    ├── src/
+    │   ├── components/    # Modular UI components (Buttons, Cards, Modals)
+    │   ├── contexts/      # AuthContext and state providers
+    │   ├── lib/           # Axios instance & i18n configuration
+    │   ├── locales/       # JSON localization dictionaries (en, hi, mr)
+    │   └── pages/         # Dashboard, Assessment, Voice, Curriculum, Reports, Auth
+    ├── tailwind.config.js # Custom color palettes & tokens
+    └── package.json       # Frontend scripts & dependencies
+```
+
+---
+
+## 🚀 Local Development Setup
+
+### Prerequisites
 - Node.js (v18+)
-- Python (v3.10+)
-- A PostgreSQL database (or you can use SQLite by default)
-- Gemini API Key
+- Python (v3.10 or v3.11)
+- PostgreSQL (or local SQLite)
+- Google Gemini API Key
 
-### 2. Backend Setup
-1. Navigate to the backend directory:
+---
+
+### 1. Backend Setup
+
+1. **Navigate to the backend directory**:
    ```bash
    cd backend
    ```
-2. Create and activate a virtual environment:
-   ```bash
+
+2. **Create and activate a virtual environment**:
+   ```powershell
+   # Windows (PowerShell)
    python -m venv venv
-   # On Windows
-   venv\Scripts\activate
-   # On Mac/Linux
+   .\venv\Scripts\Activate.ps1
+
+   # Linux / macOS
+   python3 -m venv venv
    source venv/bin/activate
    ```
-3. Install dependencies:
+
+3. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
-4. Configure environment variables. Create a `.env` file in the `backend` folder:
+
+4. **Configure environment variables**:
+   Create a `.env` file in the `backend/` directory:
    ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/literacy_db"
-   GEMINI_API_KEY="your_gemini_api_key_here"
-   SECRET_KEY="your_jwt_secret_here"
+   PROJECT_NAME="AI Literacy Platform"
+   API_V1_STR="/api/v1"
+   SECRET_KEY="your-super-secret-jwt-key"
+   DATABASE_URL="postgresql://postgres:password@your-db-host:5432/postgres?pgbouncer=true"
+   GEMINI_API_KEY="your-gemini-api-key"
    ```
-5. Generate the Prisma client and push the database schema:
+
+5. **Generate Prisma Client & Sync Database**:
    ```bash
    prisma generate
    prisma db push
    ```
-6. Start the FastAPI server:
-   ```bash
-   uvicorn main:app --reload
-   ```
-   The backend will be available at `http://localhost:8000`.
 
-### 3. Frontend Setup
-1. Navigate to the frontend directory:
+6. **Seed Initial Curriculum & Lessons**:
+   ```bash
+   python seed_curriculum.py
+   ```
+
+7. **Start Backend Server**:
+   ```bash
+   uvicorn main:app --reload --port 8000
+   ```
+   > API Documentation (Swagger) available at `http://localhost:8000/docs`.
+
+---
+
+### 2. Frontend Setup
+
+1. **Navigate to the frontend directory**:
    ```bash
    cd frontend
    ```
-2. Install dependencies:
+
+2. **Install dependencies**:
    ```bash
    npm install
    ```
-3. Run the development server:
+
+3. **Configure environment variables**:
+   Create a `.env` file in the `frontend/` directory:
+   ```env
+   VITE_API_URL=http://127.0.0.1:8000/api/v1
+   ```
+
+4. **Start Development Server**:
    ```bash
    npm run dev
    ```
-   The frontend will be available at `http://localhost:5173`.
+   > Frontend available at `http://localhost:5173`.
 
-## Usage
-1. Open the frontend in your browser.
-2. Sign up for a new account (you can select your preferred language here).
-3. Log in to access the Dashboard.
-4. Click on **Diagnostic Assessment** to begin the reading, writing, and speaking tests.
-5. Review your detailed results and follow the suggested learning path!
+---
+
+## 🌐 Production Deployment
+
+| Service | Platform | Build Command | Start / Output |
+| :--- | :--- | :--- | :--- |
+| **Frontend** | [Vercel](https://vercel.com) | `npm run build` | Output: `dist` |
+| **Backend** | [Render](https://render.com) | `pip install -r requirements.txt && prisma generate && prisma db push` | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
+| **Database** | [Supabase](https://supabase.com) | Managed PostgreSQL | Session / Transaction Pooler on Port `5432` / `6543` |
+
+---
+
+## 👥 Authors & Acknowledgments
+
+- Developed with ❤️ for Neo-Learners & Adult Literacy Empowerment.
+- Live Deployment: [AI Literacy Assistant](https://ai-powered-literacy-assistant-for-n.vercel.app/)
