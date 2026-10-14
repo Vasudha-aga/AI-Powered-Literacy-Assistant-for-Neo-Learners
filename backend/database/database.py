@@ -9,6 +9,12 @@ async def connect_db():
             print("Successfully connected to Prisma DB")
     except Exception as e:
         print(f"Prisma DB connect warning: {e}")
+        try:
+            await db.disconnect()
+        except Exception:
+            pass
+        raise e
+
 
 async def disconnect_db():
     try:

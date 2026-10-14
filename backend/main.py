@@ -34,10 +34,23 @@ def root():
 @app.get("/health")
 async def health():
     db = get_db()
+    db_status = "disconnected"
+    db_error = None
+    try:
+        if not db.is_connected():
+            await db.connect()
+        # Actually verify connection by executing a lightweight query
+        await db.query_raw("SELECT 1")
+        db_status = "connected"
+    except Exception as e:
+        db_status = "error"
+        db_error = f"{type(e).__name__}: {str(e)}"
     return {
         "status": "healthy",
-        "database": "connected" if db.is_connected() else "disconnected"
+        "database": db_status,
+        "database_error": db_error
     }
+
 
 
 from routers import auth, curriculum, assessment, learning_path, voice, gamification, reports

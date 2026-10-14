@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from auth.deps import get_current_user
 from auth.security import verify_password, get_password_hash, create_access_token
 from core.config import settings
-from database.database import get_db
+from database.database import get_db, connect_db
 from schemas.user import UserCreate, UserUpdate, UserInDB, Token
 from prisma.models import User
 from prisma.errors import UniqueViolationError
@@ -14,8 +14,10 @@ router = APIRouter()
 
 @router.post("/register", response_model=UserInDB)
 async def register(user_in: UserCreate):
-    db = get_db()
     try:
+        db = get_db()
+        if not db.is_connected():
+            await connect_db()
         user_obj = await db.user.create(
             data=cast(Any, {
                 "email": user_in.email,
@@ -48,6 +50,8 @@ async def register(user_in: UserCreate):
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     try:
         db = get_db()
+        if not db.is_connected():
+            await connect_db()
         user = await db.user.find_unique(where={"email": form_data.username})
         if not user or not verify_password(form_data.password, user.password_hash):
             raise HTTPException(status_code=400, detail="Incorrect email or password")
