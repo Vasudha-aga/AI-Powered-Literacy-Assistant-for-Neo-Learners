@@ -51,6 +51,49 @@ async def health():
         "database_error": db_error
     }
 
+@app.get(f"{settings.API_V1_STR}/debug-db")
+async def debug_db():
+    import os, sys, traceback
+    from prisma import Prisma
+    
+    db_url = os.getenv("DATABASE_URL", "NOT_SET")
+    masked_url = db_url
+    if "@" in db_url:
+        try:
+            prefix, host = db_url.split("@", 1)
+            scheme = prefix.split("://")[0]
+            masked_url = f"{scheme}://***:***@{host}"
+        except Exception:
+            masked_url = "INVALID_FORMAT"
+    
+    info = {
+        "python_version": sys.version,
+        "database_url_configured": db_url != "NOT_SET",
+        "database_url_masked": masked_url,
+        "database_url_len": len(db_url),
+        "has_leading_quote": db_url.startswith('"') or db_url.startswith("'"),
+    }
+    
+    test_client = Prisma()
+    try:
+        await test_client.connect()
+        info["connect_success"] = True
+        res = await test_client.query_raw("SELECT 1 as test")
+        info["query_result"] = str(res)
+        await test_client.disconnect()
+    except Exception as exc:
+        info["connect_success"] = False
+        info["error_type"] = type(exc).__name__
+        info["error_message"] = str(exc)
+        info["traceback"] = traceback.format_exc()
+        try:
+            await test_client.disconnect()
+        except Exception:
+            pass
+            
+    return info
+
+
 
 
 from routers import auth, curriculum, assessment, learning_path, voice, gamification, reports
