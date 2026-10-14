@@ -2,7 +2,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
-from database.database import connect_db, disconnect_db, get_db
+from database.database import connect_db, disconnect_db, get_db, is_db_connected
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -37,8 +38,8 @@ async def health():
     db_status = "disconnected"
     db_error = None
     try:
-        if not db.is_connected():
-            await db.connect()
+        if not is_db_connected():
+            await connect_db()
         # Actually verify connection by executing a lightweight query
         await db.query_raw("SELECT 1")
         db_status = "connected"

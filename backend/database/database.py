@@ -13,19 +13,31 @@ def ensure_prisma_engine():
     except Exception as err:
         print(f"Warning during ensure_prisma_engine: {err}")
 
+def is_db_connected() -> bool:
+    engine = getattr(db, "_internal_engine", None)
+    return engine is not None and getattr(engine, "url", None) is not None
+
 async def connect_db():
     try:
-        if not db.is_connected():
+        if not is_db_connected():
+            if db.is_connected():
+                try:
+                    await db.disconnect()
+                except Exception:
+                    pass
             await db.connect()
             print("Successfully connected to Prisma DB")
     except Exception as e:
         print(f"Prisma DB connect warning: {e}. Attempting auto-fetch engine binaries...")
         try:
             ensure_prisma_engine()
-            if not db.is_connected():
-                await db.connect()
-                print("Successfully connected to Prisma DB after binary setup")
-                return
+            if db.is_connected():
+                try:
+                    await db.disconnect()
+                except Exception:
+                    pass
+            await db.connect()
+            print("Successfully connected to Prisma DB after binary setup")
         except Exception as retry_err:
             print(f"Failed to connect after retry: {retry_err}")
             try:
@@ -33,8 +45,6 @@ async def connect_db():
             except Exception:
                 pass
             raise retry_err
-
-
 
 async def disconnect_db():
     try:
@@ -45,3 +55,4 @@ async def disconnect_db():
 
 def get_db():
     return db
+
