@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
-from database.database import connect_db, disconnect_db
+from database.database import connect_db, disconnect_db, get_db
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,8 +32,13 @@ def root():
     return {"message": "Welcome to AI Literacy Platform API", "status": "online"}
 
 @app.get("/health")
-def health():
-    return {"status": "healthy"}
+async def health():
+    db = get_db()
+    return {
+        "status": "healthy",
+        "database": "connected" if db.is_connected() else "disconnected"
+    }
+
 
 from routers import auth, curriculum, assessment, learning_path, voice, gamification, reports
 
