@@ -14,45 +14,53 @@ def ensure_prisma_engine():
         print(f"Warning during ensure_prisma_engine: {err}")
 
 def is_db_connected() -> bool:
+    global db
+    if db is None:
+        return False
     engine = getattr(db, "_internal_engine", None)
     return engine is not None and getattr(engine, "url", None) is not None
 
 async def connect_db():
+    global db
+    if is_db_connected():
+        return db
+    
+    if db is not None:
+        try:
+            await db.disconnect()
+        except Exception:
+            pass
+        db._internal_engine = None
+
     try:
-        if not is_db_connected():
-            if db.is_connected():
-                try:
-                    await db.disconnect()
-                except Exception:
-                    pass
-            await db.connect()
-            print("Successfully connected to Prisma DB")
+        db = Prisma(auto_register=True)
+        await db.connect()
+        print("Successfully connected to Prisma DB")
+        return db
     except Exception as e:
         print(f"Prisma DB connect warning: {e}. Attempting auto-fetch engine binaries...")
         try:
             ensure_prisma_engine()
-            if db.is_connected():
-                try:
-                    await db.disconnect()
-                except Exception:
-                    pass
+            db = Prisma(auto_register=True)
             await db.connect()
             print("Successfully connected to Prisma DB after binary setup")
+            return db
         except Exception as retry_err:
             print(f"Failed to connect after retry: {retry_err}")
-            try:
-                await db.disconnect()
-            except Exception:
-                pass
             raise retry_err
 
 async def disconnect_db():
-    try:
-        if db.is_connected():
+    global db
+    if db is not None and is_db_connected():
+        try:
             await db.disconnect()
-    except Exception as e:
-        print(f"Prisma DB disconnect warning: {e}")
+        except Exception as e:
+            print(f"Prisma DB disconnect warning: {e}")
 
 def get_db():
+    global db
+    if db is None:
+        db = Prisma(auto_register=True)
     return db
+
 
