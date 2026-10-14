@@ -36,19 +36,34 @@ async def register(user_in: UserCreate):
             status_code=400,
             detail="The user with this email already exists in the system.",
         )
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Register Error: {type(e).__name__} - {str(e)}")
+
 
 @router.post("/login", response_model=Token)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    db = get_db()
-    user = await db.user.find_unique(where={"email": form_data.username})
-    if not user or not verify_password(form_data.password, user.password_hash):
-        raise HTTPException(status_code=400, detail="Incorrect email or password")
-    
-    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        subject=user.email, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
+    try:
+        db = get_db()
+        user = await db.user.find_unique(where={"email": form_data.username})
+        if not user or not verify_password(form_data.password, user.password_hash):
+            raise HTTPException(status_code=400, detail="Incorrect email or password")
+        
+        access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(
+            subject=user.email, expires_delta=access_token_expires
+        )
+        return {"access_token": access_token, "token_type": "bearer"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Login Error: {type(e).__name__} - {str(e)}")
+
 
 @router.get("/me", response_model=UserInDB)
 async def read_user_me(current_user: User = Depends(get_current_user)):
